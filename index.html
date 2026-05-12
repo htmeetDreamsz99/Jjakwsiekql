@@ -1,110 +1,326 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<style>
-body {
-    margin: 0;
-    padding: 20px;
-    background: radial-gradient(circle at 50% 50%, #000000 5%, #3a0000 35%, #050000 70%, #000000 100%);
-    color: #ff0000;
-    font-family: monospace;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-}
-h2 {
-    text-shadow: 0 0 15px #ff0000;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-input, textarea {
-    width: 90%;
-    margin: 10px 0;
-    padding: 12px;
-    background: rgba(10, 0, 0, 0.8);
-    border: 1px solid #4a0000;
-    color: #ff3333;
-    font-family: monospace;
-    font-size: 16px;
-    outline: none;
-    box-sizing: border-box;
-    box-shadow: inset 0 0 5px #000;
-}
-input::placeholder, textarea::placeholder {
-    color: #880000;
-}
-.btn-container {
-    position: relative;
-    margin: 15px 0;
-    width: 90%;
-    border-radius: 4px;
-}
-.btn-container::before {
-    content: "";
-    position: absolute;
-    top: -2px; left: -2px; right: -2px; bottom: -2px;
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    background-size: 400%;
-    z-index: -1;
-    animation: rgb 8s linear infinite;
-    border-radius: 5px;
-}
-.btn {
-    width: 100%;
-    padding: 15px;
-    background: #0a0000;
-    color: #ff3333;
-    border: none;
-    border-radius: 3px;
-    font-family: monospace;
-    font-weight: bold;
-    font-size: 16px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: transform 0.1s ease, background 0.2s;
-    box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
-}
-.btn:active {
-    transform: scale(0.96);
-    background: #1a0000;
-}
-@keyframes rgb {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ADM TERMINAL v13.0</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg: #000000;
+            --panel-bg: rgba(18, 18, 22, 0.98);
+            --accent: #007aff;
+            --border: rgba(255, 255, 255, 0.12);
+            --text: #ffffff;
+            --text-dim: #555555;
+            --error: #ff453a;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh; width: 100vw;
+            overflow: hidden; position: fixed;
+            display: flex; flex-direction: column;
+        }
+
+        .bg-glow {
+            position: fixed; inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 122, 255, 0.15) 0%, transparent 80%);
+            z-index: 0; pointer-events: none;
+        }
+
+        /* ОСНОВНОЙ КОНТЕЙНЕР */
+        .app-shell {
+            position: relative; z-index: 10;
+            display: flex; flex-direction: column; height: 100%;
+            width: 100%;
+        }
+
+        header {
+            padding: calc(env(safe-area-inset-top) + 20px) 25px 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-shrink: 0;
+        }
+        header .brand {
+            font-size: 10px; font-weight: 900; letter-spacing: 3px;
+            color: var(--text-dim); text-transform: uppercase;
+        }
+
+        /* ИСПРАВЛЕННАЯ СЦЕНА: Центрирует панель и не дает ей падать вниз */
+        .stage {
+            flex: 1;
+            display: flex;
+            align-items: center; /* Центр по вертикали */
+            justify-content: center; /* Центр по горизонтали */
+            padding: 20px;
+            padding-bottom: 100px; /* Огромный отступ снизу для защиты кнопок */
+            overflow: hidden;
+        }
+
+        .glass-panel {
+            width: 100%;
+            max-width: 360px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            border-radius: 35px; border: 1px solid var(--border);
+            padding: 30px 25px;
+            display: none; /* Переключаем через display для надежности */
+            flex-direction: column; gap: 15px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+            animation: panelFade 0.3s ease-out;
+        }
+
+        .glass-panel.active { display: flex; }
+
+        @keyframes panelFade {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .catalog-group {
+            background: rgba(255,255,255,0.03);
+            border-radius: 22px; border: 1px solid var(--border);
+            padding: 15px; display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .cat-tag {
+            font-size: 9px; font-weight: 900; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 1.5px;
+        }
+
+        input, textarea {
+            width: 100%; background: #000;
+            border: 1px solid var(--border);
+            border-radius: 16px; padding: 18px;
+            color: #fff; font-size: 16px; outline: none;
+            -webkit-user-select: text; user-select: text; /* Разрешаем ввод */
+        }
+        textarea { height: 100px; resize: none; }
+
+        .btn {
+            width: 100%; padding: 18px; border-radius: 18px;
+            border: none; cursor: pointer; font-size: 11px;
+            font-weight: 800; letter-spacing: 2px;
+            text-transform: uppercase; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .btn-prime { background: var(--accent); color: #fff; }
+        .btn-ghost { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border); }
+        .btn-red { background: rgba(255,69,58,0.15); color: var(--error); border: 1px solid rgba(255,69,58,0.2); }
+        .btn:active { opacity: 0.7; transform: scale(0.98); }
+        /* НАВИГАЦИЯ: Поднята и зафиксирована */
+        nav {
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            padding: 15px 10px calc(env(safe-area-inset-bottom) + 15px);
+            display: flex; justify-content: space-around;
+            flex-shrink: 0; z-index: 1000;
+        }
+
+        .tab {
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+            color: var(--text-dim); cursor: pointer; flex: 1;
+        }
+        .tab.active { color: var(--accent); }
+        .tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+        .tab span { font-size: 9px; font-weight: 800; text-transform: uppercase; }
+
+    </style>
 </head>
 <body>
-<h2>SLNC Admin</h2>
-<input type="number" id="uid" placeholder="ID ЮЗЕРА">
-<input type="number" id="amt" placeholder="КОЛИЧЕСТВО">
-<textarea id="msg" placeholder="ТЕКСТ РАССЫЛКИ" rows="4"></textarea>
 
-<div class="btn-container"><button class="btn" onclick="send('give')">ВЫДАТЬ ЗВЕЗДЫ</button></div>
-<div class="btn-container"><button class="btn" onclick="send('take')">ЗАБРАТЬ ЗВЕЗДЫ</button></div>
-<div class="btn-container"><button class="btn" onclick="send('ban')">ЗАБАНИТЬ ПО ID</button></div>
-<div class="btn-container"><button class="btn" onclick="send('broadcast')">МАССОВАЯ РАССЫЛКА</button></div>
+    <div class="bg-glow"></div>
 
-<script>
-let tg = window.Telegram.WebApp;
-tg.expand();
-tg.ready();
+    <div class="app-shell">
+        
+        <header>
+            <div class="brand">Sellvideo73 Admin</div>
+            <div class="brand" id="live-clock">00:00:00</div>
+        </header>
 
-function send(act) {
-    let data = {
-        action: act,
-        uid: document.getElementById('uid').value,
-        amt: document.getElementById('amt').value,
-        msg: document.getElementById('msg').value
-    };
-    tg.sendData(JSON.stringify(data));
-    tg.close();
-}
-</script>
+        <main class="stage">
+            
+            <section id="p-home" class="glass-panel active">
+                <div style="text-align: center; margin-bottom: 5px;">
+                    <div style="width: 70px; height: 70px; background: #000; border-radius: 50%; border: 1px solid var(--border); margin: 0 auto 10px;"></div>
+                    <h1 style="font-size: 18px; font-weight: 800;" id="tg-name">@PsyhoSweat</h1>
+                    <div style="font-size: 8px; font-weight: 900; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-top: 2px;">Root Access</div>
+                </div>
+
+                <div class="catalog-group">
+                    <span class="cat-tag">Каталог: Финансы</span>
+                    <button class="btn btn-prime" id="btn-to-stars" onclick="navTo('p-stars')">Управление звёздами</button>
+                </div>
+
+                <div class="catalog-group">
+                    <span class="cat-tag">Каталог: Безопасность</span>
+                    <button class="btn btn-red" id="btn-to-ban" onclick="navTo('p-ban')">Система банов</button>
+                </div>
+
+                <div class="catalog-group">
+                    <span class="cat-tag">Каталог: Оповещения</span>
+                    <button class="btn btn-ghost" id="btn-to-msg" onclick="navTo('p-msg')">Глобальная рассылка</button>
+                </div>
+            </section>
+
+            <section id="p-stars" class="glass-panel">
+                <span class="cat-tag" style="text-align: center;">Транзакции</span>
+                <input type="number" id="star-id" placeholder="ID пользователя" inputmode="numeric">
+                <input type="number" id="star-val" placeholder="Количество звезд" inputmode="numeric">
+                <button class="btn btn-prime" onclick="sendCmd('stars')">Выдать</button>
+                <button class="btn btn-ghost" onclick="navTo('p-home')">Назад</button>
+            </section>
+
+            <section id="p-ban" class="glass-panel">
+                <span class="cat-tag" style="text-align: center; color: var(--error);">Блокировка</span>
+                <input type="number" id="ban-id" placeholder="ID нарушителя" inputmode="numeric">
+                <button class="btn btn-red" onclick="sendCmd('ban')">Подтвердить бан</button>
+                <button class="btn btn-ghost" onclick="navTo('p-home')">Отмена</button>
+            </section>
+
+            <section id="p-msg" class="glass-panel">
+                <span class="cat-tag" style="text-align: center;">Вещание Worldwar73</span>
+                <textarea id="msg-body" placeholder="Введите сообщение..."></textarea>
+                <button class="btn btn-prime" onclick="sendCmd('msg')">Разослать</button>
+                <button class="btn btn-ghost" onclick="navTo('p-home')">Назад</button>
+            </section>
+
+        </main>
+
+        <nav>
+            <div class="tab active" id="tab-home" onclick="navTo('p-home', this)">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                <span>Hub</span>
+            </div>
+            <div class="tab" id="tab-msg" onclick="navTo('p-msg', this)">
+                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span>Msg</span>
+            </div>
+        </nav>
+    </div>
+    <div id="status-toast" style="position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-150px); background: #111; border: 1px solid var(--accent); padding: 12px 24px; border-radius: 50px; z-index: 10001; transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1.2); opacity: 0; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+        <div style="width: 6px; height: 6px; background: var(--accent); border-radius: 50%;"></div>
+        <span id="toast-text" style="font-size: 10px; font-weight: 800; letter-spacing: 1px; color: #fff; text-transform: uppercase;">Система готова</span>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.ready();
+
+        // --- ГИБКАЯ НАВИГАЦИЯ ---
+        function navTo(id, el = null) {
+            // Скрываем все панели через display
+            document.querySelectorAll('.glass-panel').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active');
+
+            // Обновляем табы
+            if (el) {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                el.classList.add('active');
+            }
+            
+            tg.HapticFeedback.impactOccurred('medium');
+        }
+
+        // --- УВЕДОМЛЕНИЯ ---
+        function notify(msg) {
+            const t = document.getElementById('status-toast');
+            document.getElementById('toast-text').innerText = msg;
+            t.style.opacity = '1';
+            t.style.transform = 'translateX(-50%) translateY(0)';
+            
+            tg.HapticFeedback.notificationOccurred('success');
+            setTimeout(() => {
+                t.style.opacity = '0';
+                t.style.transform = 'translateX(-50%) translateY(-150px)';
+            }, 2000);
+        }
+
+        // --- КОМАНДЫ БОТУ (Sellvideo73bot) ---
+        function sendCmd(action) {
+            let data = { 
+                target_bot: "Sellvideo73bot", 
+                cmd: action,
+                date: new Date().toISOString()
+            };
+
+            if (action === 'stars') {
+                const u = document.getElementById('star-id').value;
+                const v = document.getElementById('star-val').value;
+                if(!u || !v) return notify("ЗАПОЛНИТЕ ПОЛЯ");
+                data.payload = { uid: u, amount: v };
+                notify("ЗВЕЗДЫ ОТПРАВЛЕНЫ");
+            } 
+            else if (action === 'ban') {
+                const u = document.getElementById('ban-id').value;
+                if(!u) return notify("УКАЖИТЕ ID");
+                data.payload = { uid: u };
+                notify("ОБЪЕКТ ЗАБАНЕН");
+            } 
+            else if (action === 'msg') {
+                const txt = document.getElementById('msg-body').value;
+                if(!txt) return notify("ПУСТОЙ ТЕКСТ");
+                data.payload = { text: txt, target: "Worldwar73" };
+                notify("РАССЫЛКА ЗАПУЩЕНА");
+                document.getElementById('msg-body').value = '';
+            }
+
+            // Отправка в бот
+            tg.sendData(JSON.stringify(data));
+            
+            // Возврат в хаб через паузу
+            setTimeout(() => navTo('p-home'), 800);
+        }
+
+        // --- ЖИВЫЕ ЧАСЫ ---
+        function startClock() {
+            const clock = document.getElementById('live-clock');
+            setInterval(() => {
+                const now = new Date();
+                clock.innerText = now.toLocaleTimeString('ru-RU', {hour12: false});
+            }, 1000);
+        }
+        startClock();
+
+        // --- ФИКС ДЛЯ ANDROID (КЛАВИАТУРА И ГЕОМЕТРИЯ) ---
+        function fixGeometry() {
+            const doc = document.documentElement;
+            // Устанавливаем реальную высоту видимой области
+            doc.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+            
+            // Принудительно скроллим вверх при потере фокуса с инпутов
+            window.scrollTo(0,0);
+        }
+
+        window.addEventListener('resize', fixGeometry);
+        window.addEventListener('orientationchange', fixGeometry);
+        fixGeometry();
+
+        // Гарантированный отклик на нажатия (TouchStart)
+        document.querySelectorAll('button, .tab').forEach(btn => {
+            btn.addEventListener('touchstart', () => {
+                btn.style.opacity = '0.5';
+            });
+            btn.addEventListener('touchend', () => {
+                btn.style.opacity = '1';
+            });
+        });
+
+        // Инициализация имени пользователя
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            document.getElementById('tg-name').innerText = `@${tg.initDataUnsafe.user.username || 'Admin'}`;
+        }
+    </script>
 </body>
 </html>
+
