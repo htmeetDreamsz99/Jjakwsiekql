@@ -36,7 +36,6 @@
             z-index: 0; pointer-events: none;
         }
 
-        /* ОСНОВНОЙ КОНТЕЙНЕР */
         .app-shell {
             position: relative; z-index: 10;
             display: flex; flex-direction: column; height: 100%;
@@ -53,14 +52,13 @@
             color: var(--text-dim); text-transform: uppercase;
         }
 
-        /* ИСПРАВЛЕННАЯ СЦЕНА: Центрирует панель и не дает ей падать вниз */
         .stage {
             flex: 1;
             display: flex;
-            align-items: center; /* Центр по вертикали */
-            justify-content: center; /* Центр по горизонтали */
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            padding-bottom: 100px; /* Огромный отступ снизу для защиты кнопок */
+            padding-bottom: 100px;
             overflow: hidden;
         }
 
@@ -71,7 +69,7 @@
             backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
             border-radius: 35px; border: 1px solid var(--border);
             padding: 30px 25px;
-            display: none; /* Переключаем через display для надежности */
+            display: none;
             flex-direction: column; gap: 15px;
             box-shadow: 0 40px 80px rgba(0,0,0,0.8);
             animation: panelFade 0.3s ease-out;
@@ -100,7 +98,7 @@
             border: 1px solid var(--border);
             border-radius: 16px; padding: 18px;
             color: #fff; font-size: 16px; outline: none;
-            -webkit-user-select: text; user-select: text; /* Разрешаем ввод */
+            -webkit-user-select: text; user-select: text;
         }
         textarea { height: 100px; resize: none; }
 
@@ -115,7 +113,7 @@
         .btn-ghost { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border); }
         .btn-red { background: rgba(255,69,58,0.15); color: var(--error); border: 1px solid rgba(255,69,58,0.2); }
         .btn:active { opacity: 0.7; transform: scale(0.98); }
-        /* НАВИГАЦИЯ: Поднята и зафиксирована */
+        
         nav {
             background: rgba(5, 5, 5, 0.98);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -216,14 +214,11 @@
         tg.expand();
         tg.ready();
 
-        // --- ГИБКАЯ НАВИГАЦИЯ ---
         function navTo(id, el = null) {
-            // Скрываем все панели через display
             document.querySelectorAll('.glass-panel').forEach(p => p.classList.remove('active'));
             const target = document.getElementById(id);
             if (target) target.classList.add('active');
 
-            // Обновляем табы
             if (el) {
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 el.classList.add('active');
@@ -232,7 +227,6 @@
             tg.HapticFeedback.impactOccurred('medium');
         }
 
-        // --- УВЕДОМЛЕНИЯ ---
         function notify(msg) {
             const t = document.getElementById('status-toast');
             document.getElementById('toast-text').innerText = msg;
@@ -246,7 +240,6 @@
             }, 2000);
         }
 
-        // --- КОМАНДЫ БОТУ (Sellvideo73bot) ---
         function sendCmd(action) {
             let data = { 
                 target_bot: "Sellvideo73bot", 
@@ -275,14 +268,11 @@
                 document.getElementById('msg-body').value = '';
             }
 
-            // Отправка в бот
             tg.sendData(JSON.stringify(data));
             
-            // Возврат в хаб через паузу
             setTimeout(() => navTo('p-home'), 800);
         }
 
-        // --- ЖИВЫЕ ЧАСЫ ---
         function startClock() {
             const clock = document.getElementById('live-clock');
             setInterval(() => {
@@ -292,13 +282,9 @@
         }
         startClock();
 
-        // --- ФИКС ДЛЯ ANDROID (КЛАВИАТУРА И ГЕОМЕТРИЯ) ---
         function fixGeometry() {
             const doc = document.documentElement;
-            // Устанавливаем реальную высоту видимой области
             doc.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-            
-            // Принудительно скроллим вверх при потере фокуса с инпутов
             window.scrollTo(0,0);
         }
 
@@ -306,7 +292,6 @@
         window.addEventListener('orientationchange', fixGeometry);
         fixGeometry();
 
-        // Гарантированный отклик на нажатия (TouchStart)
         document.querySelectorAll('button, .tab').forEach(btn => {
             btn.addEventListener('touchstart', () => {
                 btn.style.opacity = '0.5';
@@ -316,11 +301,9 @@
             });
         });
 
-        // Инициализация имени пользователя
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             document.getElementById('tg-name').innerText = `@${tg.initDataUnsafe.user.username || 'Admin'}`;
         }
     </script>
 </body>
 </html>
-
