@@ -1,309 +1,254 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ADM TERMINAL v13.0</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        :root {
-            --bg: #000000;
-            --panel-bg: rgba(18, 18, 22, 0.98);
-            --accent: #007aff;
-            --border: rgba(255, 255, 255, 0.12);
-            --text: #ffffff;
-            --text-dim: #555555;
-            --error: #ff453a;
-        }
-
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            font-family: -apple-system, system-ui, sans-serif;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            height: 100vh; width: 100vw;
-            overflow: hidden; position: fixed;
-            display: flex; flex-direction: column;
-        }
-
-        .bg-glow {
-            position: fixed; inset: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(0, 122, 255, 0.15) 0%, transparent 80%);
-            z-index: 0; pointer-events: none;
-        }
-
-        .app-shell {
-            position: relative; z-index: 10;
-            display: flex; flex-direction: column; height: 100%;
-            width: 100%;
-        }
-
-        header {
-            padding: calc(env(safe-area-inset-top) + 20px) 25px 10px;
-            display: flex; justify-content: space-between; align-items: center;
-            flex-shrink: 0;
-        }
-        header .brand {
-            font-size: 10px; font-weight: 900; letter-spacing: 3px;
-            color: var(--text-dim); text-transform: uppercase;
-        }
-
-        .stage {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            padding-bottom: 100px;
-            overflow: hidden;
-        }
-
-        .glass-panel {
-            width: 100%;
-            max-width: 360px;
-            background: var(--panel-bg);
-            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border-radius: 35px; border: 1px solid var(--border);
-            padding: 30px 25px;
-            display: none;
-            flex-direction: column; gap: 15px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.8);
-            animation: panelFade 0.3s ease-out;
-        }
-
-        .glass-panel.active { display: flex; }
-
-        @keyframes panelFade {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .catalog-group {
-            background: rgba(255,255,255,0.03);
-            border-radius: 22px; border: 1px solid var(--border);
-            padding: 15px; display: flex; flex-direction: column; gap: 10px;
-        }
-
-        .cat-tag {
-            font-size: 9px; font-weight: 900; color: var(--accent);
-            text-transform: uppercase; letter-spacing: 1.5px;
-        }
-
-        input, textarea {
-            width: 100%; background: #000;
-            border: 1px solid var(--border);
-            border-radius: 16px; padding: 18px;
-            color: #fff; font-size: 16px; outline: none;
-            -webkit-user-select: text; user-select: text;
-        }
-        textarea { height: 100px; resize: none; }
-
-        .btn {
-            width: 100%; padding: 18px; border-radius: 18px;
-            border: none; cursor: pointer; font-size: 11px;
-            font-weight: 800; letter-spacing: 2px;
-            text-transform: uppercase; transition: 0.2s;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .btn-prime { background: var(--accent); color: #fff; }
-        .btn-ghost { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border); }
-        .btn-red { background: rgba(255,69,58,0.15); color: var(--error); border: 1px solid rgba(255,69,58,0.2); }
-        .btn:active { opacity: 0.7; transform: scale(0.98); }
-        
-        nav {
-            background: rgba(5, 5, 5, 0.98);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border);
-            padding: 15px 10px calc(env(safe-area-inset-bottom) + 15px);
-            display: flex; justify-content: space-around;
-            flex-shrink: 0; z-index: 1000;
-        }
-
-        .tab {
-            display: flex; flex-direction: column; align-items: center; gap: 5px;
-            color: var(--text-dim); cursor: pointer; flex: 1;
-        }
-        .tab.active { color: var(--accent); }
-        .tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2.5; }
-        .tab span { font-size: 9px; font-weight: 800; text-transform: uppercase; }
-
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#090713">
+<title>Cosmic Crystal</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{
+  --bg:#080611;--bg2:#100a1d;--panel:rgba(25,17,42,.78);--panel2:rgba(39,25,61,.72);
+  --line:rgba(210,190,255,.15);--text:#f8f4ff;--muted:#aaa0bd;--violet:#a879ff;
+  --cyan:#52e8df;--pink:#f18bff;--green:#58e6a5;--red:#ff6f91;--amber:#ffd37a;
+  --shadow:0 18px 60px rgba(0,0,0,.35);--radius:22px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:radial-gradient(circle at 20% -10%,#29134b 0,transparent 34%),radial-gradient(circle at 100% 20%,#092e35 0,transparent 30%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{overflow-x:hidden}
+button,input,textarea,select{font:inherit}
+button{color:inherit;border:0}
+.app{max-width:760px;margin:auto;padding:env(safe-area-inset-top) 14px calc(94px + env(safe-area-inset-bottom));position:relative}
+.ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:-1}
+.ambient:before,.ambient:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;filter:blur(75px);opacity:.18}
+.ambient:before{background:#a879ff;left:-120px;top:12%}.ambient:after{background:#52e8df;right:-120px;top:50%}
+.header{display:flex;align-items:center;justify-content:space-between;padding:14px 2px 10px;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg),rgba(8,6,17,.76),transparent)}
+.brand{display:flex;align-items:center;gap:10px}.brandMark{width:39px;height:39px;transform:rotate(30deg);border-radius:9px 18px 9px 18px;background:linear-gradient(135deg,#fff,#a879ff 35%,#52e8df 75%,#fff);box-shadow:0 0 30px rgba(168,121,255,.35)}
+.brandText b{display:block;font-size:14px;letter-spacing:.12em}.brandText span{font-size:10px;color:var(--muted);letter-spacing:.18em}
+.headerRight{display:flex;align-items:center;gap:7px}.pill{padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.05);font-size:11px}.iconBtn{width:36px;height:36px;border-radius:50%;background:var(--panel);border:1px solid var(--line);cursor:pointer}
+.screen{display:none;animation:rise .28s ease}.screen.active{display:block}@keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.glass{background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025)),var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.hero{padding:22px;margin:6px 0 14px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:150px;height:150px;right:-45px;top:-55px;background:linear-gradient(135deg,transparent 25%,rgba(255,255,255,.2),transparent 60%);transform:rotate(25deg)}
+.kicker{color:var(--muted);font-size:12px}.balance{font-size:35px;font-weight:800;letter-spacing:-.04em;margin:4px 0}.shimmer{background:linear-gradient(90deg,#fff,#a879ff,#52e8df,#fff);background-size:240% auto;color:transparent;background-clip:text;-webkit-background-clip:text;animation:shine 5s linear infinite}@keyframes shine{to{background-position:240% center}}
+.subrow{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.positive{color:var(--green)}.negative{color:var(--red)}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px}.action{padding:11px 5px;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:15px;text-align:center;cursor:pointer;font-size:11px}.action strong{display:block;font-size:17px;margin-bottom:4px}
+.sectionHead{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 10px}.sectionHead h2{font-size:16px;margin:0}.link{color:var(--cyan);font-size:11px;cursor:pointer}
+.quickRow{display:flex;gap:9px;overflow:auto;padding-bottom:4px;scrollbar-width:none}.quickRow::-webkit-scrollbar{display:none}.quick{min-width:112px;height:78px;padding:12px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(168,121,255,.14),rgba(82,232,223,.04));cursor:pointer}.quick .qicon{font-size:22px}.quick span{display:block;font-size:11px;margin-top:6px;color:#e9e0f6}
+.asset{display:flex;align-items:center;gap:11px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}.asset:last-child{border-bottom:0}.tokenIcon{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#fff, #a879ff 25%,#39205d 68%);box-shadow:0 0 18px rgba(168,121,255,.18)}.assetMain{flex:1}.assetMain b{font-size:13px}.assetMain span{display:block;color:var(--muted);font-size:10px;margin-top:3px}.assetVal{text-align:right}.assetVal b{font-size:13px}.assetVal span{display:block;font-size:10px;color:var(--green);margin-top:3px}
+.poolGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.pool{padding:12px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.035)}.pool b{font-size:12px}.pool small{display:block;color:var(--muted);font-size:9px;margin-top:6px}.pool strong{display:block;font-size:14px;margin-top:4px}.badge{display:inline-block;font-size:9px;padding:4px 6px;border-radius:999px;background:rgba(82,232,223,.1);color:var(--cyan)}
+.tx{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}.tx:last-child{border:0}.txIcon{width:34px;height:34px;border-radius:11px;background:rgba(255,255,255,.05);display:grid;place-items:center}.txMain{flex:1}.txMain b{font-size:12px}.txMain span{display:block;color:var(--muted);font-size:10px;margin-top:3px}.txVal{text-align:right;font-size:11px}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:5px}
+.tabs{display:flex;gap:6px;padding:4px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:15px;margin-bottom:12px}.tab{flex:1;padding:9px;border-radius:11px;background:transparent;color:var(--muted);cursor:pointer;font-size:11px}.tab.active{background:linear-gradient(135deg,rgba(168,121,255,.26),rgba(82,232,223,.1));color:#fff}
+.field{margin:9px 0}.field label{display:block;color:var(--muted);font-size:10px;margin:0 0 6px}.input,.select,.textarea{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:15px;background:rgba(0,0,0,.18);color:#fff;outline:none}.input:focus,.textarea:focus{border-color:rgba(168,121,255,.65)}.textarea{min-height:90px;resize:vertical}.tokenField{display:flex;gap:8px}.tokenField .input{flex:1}.tokenSelect{min-width:100px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.05);color:#fff;padding:0 12px}
+.swapBox{padding:14px}.swapLine{display:flex;align-items:center;gap:8px}.swapLine .amount{flex:1}.max{font-size:10px;color:var(--cyan);cursor:pointer}.swapFlip{width:40px;height:40px;margin:5px auto;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,rgba(168,121,255,.3),rgba(82,232,223,.12));border:1px solid var(--line);cursor:pointer}.details{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}.detail{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);padding:4px 0}.detail b{color:#eee}
+.primary{width:100%;padding:14px;border-radius:16px;margin-top:12px;background:linear-gradient(110deg,#8c5cf6,#c079ff 45%,#52e8df);color:#100916;font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(168,121,255,.2)}.secondary{padding:11px 14px;border-radius:13px;background:rgba(255,255,255,.06);border:1px solid var(--line);cursor:pointer}.danger{background:linear-gradient(110deg,#ff547a,#ff9b83);color:#19050c}
+.nav{position:fixed;z-index:30;left:50%;bottom:8px;transform:translateX(-50%);width:min(720px,calc(100% - 20px));padding:8px;display:grid;grid-template-columns:repeat(5,1fr);gap:5px;background:rgba(13,9,23,.88);border:1px solid var(--line);border-radius:22px;backdrop-filter:blur(24px);box-shadow:0 16px 50px rgba(0,0,0,.45)}.nav button{background:transparent;color:var(--muted);font-size:9px;padding:7px 2px;border-radius:14px;cursor:pointer}.nav button span{display:block;font-size:18px;margin-bottom:3px}.nav button.active{color:#fff;background:linear-gradient(135deg,rgba(168,121,255,.2),rgba(82,232,223,.08))}
+.row{display:flex;gap:8px;align-items:center}.between{display:flex;justify-content:space-between;align-items:center}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cardPad{padding:15px}
+.chart{height:150px;position:relative;overflow:hidden;border-radius:17px;background:linear-gradient(rgba(255,255,255,.025),rgba(255,255,255,.01));border:1px solid var(--line)}.chart svg{width:100%;height:100%}.chartLabel{position:absolute;left:10px;top:8px;font-size:10px;color:var(--muted)}
+.progress{height:7px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;width:62%;background:linear-gradient(90deg,#a879ff,#52e8df);border-radius:inherit}
+.listCard{padding:13px;margin-bottom:8px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.035)}
+.modalWrap{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.62);display:none;align-items:flex-end;justify-content:center}.modalWrap.open{display:flex}.modal{width:min(760px,100%);max-height:88vh;overflow:auto;border-radius:26px 26px 0 0;padding:20px;background:#120c1e;border:1px solid var(--line);box-shadow:0 -20px 80px rgba(0,0,0,.55);animation:sheet .22s ease}@keyframes sheet{from{transform:translateY(100%)}to{transform:none}}.modal h3{margin:0 0 6px}.modal p{color:var(--muted);font-size:12px;line-height:1.5}
+.toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);z-index:60;opacity:0;pointer-events:none;padding:11px 15px;border-radius:14px;background:#171020;border:1px solid var(--line);box-shadow:var(--shadow);font-size:11px;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:18px}.empty b{display:block;color:#eee;margin-bottom:5px}
+.small{font-size:10px;color:var(--muted)}.risk{padding:11px;border-radius:14px;border:1px solid rgba(88,230,165,.2);background:rgba(88,230,165,.06);color:var(--green);font-size:11px}.risk.amber{color:var(--amber);border-color:rgba(255,211,122,.2);background:rgba(255,211,122,.06)}.risk.red{color:var(--red);border-color:rgba(255,111,145,.2);background:rgba(255,111,145,.06)}
+.onboard{min-height:calc(100vh - 40px);display:grid;place-items:center;text-align:center;padding:25px 0}.crystal{width:110px;height:110px;margin:0 auto 24px;transform:rotate(30deg);border-radius:20px 48px 20px 48px;background:linear-gradient(135deg,#fff,#a879ff 28%,#52e8df 62%,#f18bff);box-shadow:0 0 70px rgba(168,121,255,.38);animation:float 3.5s ease-in-out infinite}@keyframes float{50%{transform:rotate(30deg) translateY(-9px)}}.onboard h1{font-size:33px;letter-spacing:-.04em;margin:0}.onboard p{color:var(--muted);font-size:12px;line-height:1.6;max-width:400px;margin:10px auto 22px}
+.toggle{width:45px;height:25px;border-radius:99px;background:rgba(255,255,255,.1);border:1px solid var(--line);padding:3px;cursor:pointer}.toggle i{display:block;width:17px;height:17px;border-radius:50%;background:#fff;transition:.2s}.toggle.on{background:linear-gradient(90deg,#a879ff,#52e8df)}.toggle.on i{transform:translateX(19px)}
+@media(max-width:430px){.poolGrid{grid-template-columns:1fr 1fr}.actions{grid-template-columns:repeat(4,1fr)}.balance{font-size:31px}}
+</style>
 </head>
 <body>
+<div class="ambient"></div>
+<div class="app">
+  <header class="header">
+    <div class="brand"><div class="brandMark"></div><div class="brandText"><b>COSMIC CRYSTAL</b><span>TON LIQUIDITY NETWORK</span></div></div>
+    <div class="headerRight"><div class="pill" id="topBalance">12.48 TON</div><button class="iconBtn" onclick="openModal('notifications')">♢</button></div>
+  </header>
 
-    <div class="bg-glow"></div>
+  <main id="home" class="screen active">
+    <section class="hero glass">
+      <div class="kicker">Total portfolio</div>
+      <div class="balance shimmer" id="heroUsd">$1,284.52</div>
+      <div class="subrow"><span id="heroTon">≈ 12.48 TON</span><span class="positive">+8.42% · 24h</span></div>
+      <div class="chart" style="margin-top:16px;height:90px">
+        <svg viewBox="0 0 600 100" preserveAspectRatio="none"><defs><linearGradient id="cg" x1="0" x2="1"><stop stop-color="#a879ff"/><stop offset="1" stop-color="#52e8df"/></linearGradient></defs><path d="M0 78 C50 72 70 85 105 60 S160 68 195 48 S245 56 280 40 S330 50 365 35 S410 55 450 24 S500 42 535 18 S575 30 600 10" fill="none" stroke="url(#cg)" stroke-width="4"/><path d="M0 100 L0 78 C50 72 70 85 105 60 S160 68 195 48 S245 56 280 40 S330 50 365 35 S410 55 450 24 S500 42 535 18 S575 30 600 10 L600 100Z" fill="url(#cg)" opacity=".08"/></svg>
+      </div>
+      <div class="actions">
+        <button class="action" onclick="show('receive')"><strong>↓</strong>Receive</button>
+        <button class="action" onclick="show('send')"><strong>↑</strong>Send</button>
+        <button class="action" onclick="toast('On-ramp integration is ready for backend connection')"><strong>＋</strong>Buy TON</button>
+        <button class="action" onclick="openModal('more')"><strong>⋯</strong>More</button>
+      </div>
+    </section>
 
-    <div class="app-shell">
-        
-        <header>
-            <div class="brand">Sellvideo73 Admin</div>
-            <div class="brand" id="live-clock">00:00:00</div>
-        </header>
-
-        <main class="stage">
-            
-            <section id="p-home" class="glass-panel active">
-                <div style="text-align: center; margin-bottom: 5px;">
-                    <div style="width: 70px; height: 70px; background: #000; border-radius: 50%; border: 1px solid var(--border); margin: 0 auto 10px;"></div>
-                    <h1 style="font-size: 18px; font-weight: 800;" id="tg-name">@PsyhoSweat</h1>
-                    <div style="font-size: 8px; font-weight: 900; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-top: 2px;">Root Access</div>
-                </div>
-
-                <div class="catalog-group">
-                    <span class="cat-tag">Каталог: Финансы</span>
-                    <button class="btn btn-prime" id="btn-to-stars" onclick="navTo('p-stars')">Управление звёздами</button>
-                </div>
-
-                <div class="catalog-group">
-                    <span class="cat-tag">Каталог: Безопасность</span>
-                    <button class="btn btn-red" id="btn-to-ban" onclick="navTo('p-ban')">Система банов</button>
-                </div>
-
-                <div class="catalog-group">
-                    <span class="cat-tag">Каталог: Оповещения</span>
-                    <button class="btn btn-ghost" id="btn-to-msg" onclick="navTo('p-msg')">Глобальная рассылка</button>
-                </div>
-            </section>
-
-            <section id="p-stars" class="glass-panel">
-                <span class="cat-tag" style="text-align: center;">Транзакции</span>
-                <input type="number" id="star-id" placeholder="ID пользователя" inputmode="numeric">
-                <input type="number" id="star-val" placeholder="Количество звезд" inputmode="numeric">
-                <button class="btn btn-prime" onclick="sendCmd('stars')">Выдать</button>
-                <button class="btn btn-ghost" onclick="navTo('p-home')">Назад</button>
-            </section>
-
-            <section id="p-ban" class="glass-panel">
-                <span class="cat-tag" style="text-align: center; color: var(--error);">Блокировка</span>
-                <input type="number" id="ban-id" placeholder="ID нарушителя" inputmode="numeric">
-                <button class="btn btn-red" onclick="sendCmd('ban')">Подтвердить бан</button>
-                <button class="btn btn-ghost" onclick="navTo('p-home')">Отмена</button>
-            </section>
-
-            <section id="p-msg" class="glass-panel">
-                <span class="cat-tag" style="text-align: center;">Вещание Worldwar73</span>
-                <textarea id="msg-body" placeholder="Введите сообщение..."></textarea>
-                <button class="btn btn-prime" onclick="sendCmd('msg')">Разослать</button>
-                <button class="btn btn-ghost" onclick="navTo('p-home')">Назад</button>
-            </section>
-
-        </main>
-
-        <nav>
-            <div class="tab active" id="tab-home" onclick="navTo('p-home', this)">
-                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                <span>Hub</span>
-            </div>
-            <div class="tab" id="tab-msg" onclick="navTo('p-msg', this)">
-                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span>Msg</span>
-            </div>
-        </nav>
-    </div>
-    <div id="status-toast" style="position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-150px); background: #111; border: 1px solid var(--accent); padding: 12px 24px; border-radius: 50px; z-index: 10001; transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1.2); opacity: 0; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
-        <div style="width: 6px; height: 6px; background: var(--accent); border-radius: 50%;"></div>
-        <span id="toast-text" style="font-size: 10px; font-weight: 800; letter-spacing: 1px; color: #fff; text-transform: uppercase;">Система готова</span>
+    <div class="sectionHead"><h2>Quick Actions</h2></div>
+    <div class="quickRow">
+      <button class="quick" onclick="show('trade')"><div class="qicon">◇</div><span>Swap</span></button>
+      <button class="quick" onclick="show('earn')"><div class="qicon">◈</div><span>Earn</span></button>
+      <button class="quick" onclick="show('launch')"><div class="qicon">✦</div><span>Launch</span></button>
+      <button class="quick" onclick="show('launch');setLaunchTab('sniper')"><div class="qicon">◎</div><span>Sniper</span></button>
+      <button class="quick" onclick="show('refs');setRefsTab('quests')"><div class="qicon">✧</div><span>Airdrop</span></button>
     </div>
 
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
+    <div class="sectionHead"><h2>My Assets</h2><span class="link" onclick="show('portfolio')">Manage tokens</span></div>
+    <section class="glass cardPad">
+      <div class="asset"><div class="tokenIcon">◇</div><div class="assetMain"><b>Toncoin</b><span>TON · Native</span></div><div class="assetVal"><b>12.4800</b><span>$1,284.52</span></div></div>
+      <div class="asset"><div class="tokenIcon">◈</div><div class="assetMain"><b>Tether USD</b><span>USDT · Jetton</span></div><div class="assetVal"><b>320.00</b><span>$320.00</span></div></div>
+      <div class="asset"><div class="tokenIcon">✦</div><div class="assetMain"><b>Notcoin</b><span>NOT · Jetton</span></div><div class="assetVal"><b>8,420</b><span>$126.30</span></div></div>
+    </section>
 
-        function navTo(id, el = null) {
-            document.querySelectorAll('.glass-panel').forEach(p => p.classList.remove('active'));
-            const target = document.getElementById(id);
-            if (target) target.classList.add('active');
+    <div class="sectionHead"><h2>Top Pools</h2><span class="link" onclick="show('earn')">View all</span></div>
+    <div class="poolGrid">
+      <div class="pool"><span class="badge">V2</span><b style="display:block;margin-top:7px">TON / USDT</b><small>TVL</small><strong>$1.24M</strong><small>APY 24.5%</small></div>
+      <div class="pool"><span class="badge">V2</span><b style="display:block;margin-top:7px">TON / NOT</b><small>TVL</small><strong>$782K</strong><small>APY 38.1%</small></div>
+      <div class="pool"><span class="badge">V2</span><b style="display:block;margin-top:7px">TON / DOGS</b><small>TVL</small><strong>$419K</strong><small>APY 51.7%</small></div>
+    </div>
 
-            if (el) {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                el.classList.add('active');
-            }
-            
-            tg.HapticFeedback.impactOccurred('medium');
-        }
+    <div class="sectionHead"><h2>My Tokens</h2><span class="link" onclick="show('launch')">Launch token</span></div>
+    <section class="glass cardPad"><div class="empty"><b>You haven't created any tokens yet</b>Launch a token with bonding curve and DEX liquidity.</div></section>
 
-        function notify(msg) {
-            const t = document.getElementById('status-toast');
-            document.getElementById('toast-text').innerText = msg;
-            t.style.opacity = '1';
-            t.style.transform = 'translateX(-50%) translateY(0)';
-            
-            tg.HapticFeedback.notificationOccurred('success');
-            setTimeout(() => {
-                t.style.opacity = '0';
-                t.style.transform = 'translateX(-50%) translateY(-150px)';
-            }, 2000);
-        }
+    <div class="sectionHead"><h2>Recent Activity</h2><span class="link" onclick="show('portfolio')">History</span></div>
+    <section class="glass cardPad">
+      <div class="tx"><div class="txIcon">↻</div><div class="txMain"><b>Swap TON → USDT</b><span>2 minutes ago · <i class="dot"></i>Confirmed</span></div><div class="txVal">+48.20 USDT</div></div>
+      <div class="tx"><div class="txIcon">↓</div><div class="txMain"><b>Received TON</b><span>1 hour ago · <i class="dot"></i>Confirmed</span></div><div class="txVal">+2.40 TON</div></div>
+      <div class="tx"><div class="txIcon">↑</div><div class="txMain"><b>Sent NOT</b><span>Yesterday · <i class="dot"></i>Confirmed</span></div><div class="txVal">−500 NOT</div></div>
+    </section>
+  </main>
 
-        function sendCmd(action) {
-            let data = { 
-                target_bot: "Sellvideo73bot", 
-                cmd: action,
-                date: new Date().toISOString()
-            };
+  <main id="portfolio" class="screen">
+    <div class="sectionHead"><h2>Portfolio</h2><span class="small">All wallets</span></div>
+    <section class="glass cardPad"><div class="kicker">Total value</div><div class="balance shimmer">$1,284.52</div><div class="subrow"><span>12.48 TON</span><span class="positive">+$99.72 · 24h</span></div><div class="chart" style="margin-top:15px"><svg viewBox="0 0 600 180" preserveAspectRatio="none"><path d="M0 145 C60 120 90 150 140 105 S220 130 270 90 S340 115 390 70 S460 92 510 45 S560 60 600 28" fill="none" stroke="#a879ff" stroke-width="4"/></svg></div></section>
+    <div class="sectionHead"><h2>Allocation</h2></div>
+    <section class="glass cardPad grid2"><div style="width:145px;height:145px;border-radius:50%;margin:auto;background:conic-gradient(#a879ff 0 62%,#52e8df 62% 82%,#f18bff 82% 92%,#ffd37a 92%);display:grid;place-items:center"><div style="width:88px;height:88px;border-radius:50%;background:#110a1d;display:grid;place-items:center;font-size:12px">Portfolio</div></div><div><div class="small">◇ TON · 62%</div><div class="small" style="margin-top:12px">◈ USDT · 20%</div><div class="small" style="margin-top:12px">✦ NOT · 10%</div><div class="small" style="margin-top:12px">◇ Other · 8%</div></div></section>
+    <div class="sectionHead"><h2>Assets</h2></div>
+    <section class="glass cardPad">
+      <div class="asset"><div class="tokenIcon">◇</div><div class="assetMain"><b>TON</b><span>12.4800 · $102.92</span></div><div class="assetVal"><b>$1,284.52</b><span>+8.42%</span></div></div>
+      <div class="asset"><div class="tokenIcon">◈</div><div class="assetMain"><b>USDT</b><span>320.00 · $1.00</span></div><div class="assetVal"><b>$320.00</b><span>+0.02%</span></div></div>
+      <div class="asset"><div class="tokenIcon">✦</div><div class="assetMain"><b>NOT</b><span>8,420 · $0.015</span></div><div class="assetVal"><b>$126.30</b><span>−2.14%</span></div></div>
+    </section>
+    <div class="sectionHead"><h2>Transactions</h2><button class="secondary" onclick="toast('CSV export prepared')">Export CSV</button></div>
+    <section class="glass cardPad"><div class="tx"><div class="txIcon">↻</div><div class="txMain"><b>Swap TON → USDT</b><span>Today, 12:40</span></div><div class="txVal">+48.20 USDT</div></div><div class="tx"><div class="txIcon">↓</div><div class="txMain"><b>Received TON</b><span>Today, 11:12</span></div><div class="txVal">+2.40 TON</div></div></section>
+  </main>
 
-            if (action === 'stars') {
-                const u = document.getElementById('star-id').value;
-                const v = document.getElementById('star-val').value;
-                if(!u || !v) return notify("ЗАПОЛНИТЕ ПОЛЯ");
-                data.payload = { uid: u, amount: v };
-                notify("ЗВЕЗДЫ ОТПРАВЛЕНЫ");
-            } 
-            else if (action === 'ban') {
-                const u = document.getElementById('ban-id').value;
-                if(!u) return notify("УКАЖИТЕ ID");
-                data.payload = { uid: u };
-                notify("ОБЪЕКТ ЗАБАНЕН");
-            } 
-            else if (action === 'msg') {
-                const txt = document.getElementById('msg-body').value;
-                if(!txt) return notify("ПУСТОЙ ТЕКСТ");
-                data.payload = { text: txt, target: "Worldwar73" };
-                notify("РАССЫЛКА ЗАПУЩЕНА");
-                document.getElementById('msg-body').value = '';
-            }
+  <main id="trade" class="screen">
+    <div class="sectionHead"><h2>Trade</h2><span class="small">TON DEX</span></div>
+    <div class="tabs"><button class="tab active" data-trade="swap" onclick="setTradeTab('swap')">Swap</button><button class="tab" data-trade="limit" onclick="setTradeTab('limit')">Limit Order</button></div>
+    <section id="swapPanel" class="glass swapBox">
+      <div class="small">You Pay</div>
+      <div class="tokenField" style="margin-top:7px"><input id="payAmount" class="input amount" inputmode="decimal" placeholder="0.00" oninput="calcSwap()"><select id="payToken" class="tokenSelect" onchange="calcSwap()"><option>TON</option><option>USDT</option><option>NOT</option><option>DOGS</option></select></div>
+      <div class="between small" style="margin-top:6px"><span>Balance: 12.48 TON</span><span class="max" onclick="document.getElementById('payAmount').value='12.48';calcSwap()">MAX</span></div>
+      <button class="swapFlip" onclick="flipTokens()">⇅</button>
+      <div class="small">You Receive</div>
+      <div class="tokenField" style="margin-top:7px"><input id="receiveAmount" class="input" value="0.00" readonly><select id="receiveToken" class="tokenSelect"><option>USDT</option><option>TON</option><option>NOT</option><option>DOGS</option></select></div>
+      <div class="small" style="margin-top:6px">Rate: 1 TON ≈ 102.92 USDT</div>
+      <div class="details"><div class="between"><b style="font-size:11px">Transaction Details</b><span class="small">1% slippage</span></div><div class="detail"><span>LP Fee</span><b>0.25%</b></div><div class="detail"><span>Protocol Fee</span><b>0.10%</b></div><div class="detail"><span>Referral Fee</span><b>0.05%</b></div><div class="detail"><span>Estimated Gas</span><b>~0.006 TON</b></div><div class="detail"><span>Minimum received</span><b id="minReceive">0.00</b></div></div>
+      <button class="primary" onclick="confirmAction('Swap','Confirm swap in your wallet')">Swap</button>
+    </section>
+    <section id="limitPanel" class="glass cardPad" style="display:none">
+      <div class="field"><label>Amount to spend</label><input class="input" placeholder="0.00"></div><div class="field"><label>Price per token</label><input class="input" placeholder="0.0000 TON"></div><div class="field"><label>Expiry</label><select class="select"><option>1 hour</option><option>1 day</option><option>1 week</option><option>Custom</option></select></div><button class="primary" onclick="confirmAction('Limit Order','Your order will be reserved after wallet confirmation')">Place Order</button>
+    </section>
+    <div class="sectionHead"><h2>Active Orders</h2></div><section class="glass cardPad"><div class="empty"><b>No active limit orders</b>Your price-triggered orders will appear here.</div></section>
+  </main>
 
-            tg.sendData(JSON.stringify(data));
-            
-            setTimeout(() => navTo('p-home'), 800);
-        }
+  <main id="earn" class="screen">
+    <div class="sectionHead"><h2>Earn</h2><span class="small">Liquidity & Farming</span></div>
+    <div class="tabs"><button class="tab active" data-earn="pools" onclick="setEarnTab('pools')">Pools</button><button class="tab" data-earn="positions" onclick="setEarnTab('positions')">My Positions</button><button class="tab" data-earn="farm" onclick="setEarnTab('farm')">Farming</button></div>
+    <section id="poolsPanel">
+      <div class="glass cardPad" style="margin-bottom:10px"><input class="input" placeholder="Search token or pool address"><div class="row" style="margin-top:8px"><button class="secondary">All</button><button class="secondary">Stablecoins</button><button class="secondary">Memecoins</button><button class="secondary">Verified</button></div></div>
+      <div class="listCard"><div class="between"><b>◇ TON / USDT</b><span class="badge">V2</span></div><div class="grid2" style="margin-top:10px"><div><div class="small">TVL</div><b>$1,234,567</b></div><div><div class="small">APY</div><b class="positive">24.5%</b></div><div><div class="small">Volume 24h</div><b>$456,789</b></div><div><div class="small">Fees 24h</div><b>$1,234</b></div></div><button class="primary" onclick="openModal('liquidity')">Add Liquidity</button></div>
+      <div class="listCard"><div class="between"><b>✦ TON / NOT</b><span class="badge">V2</span></div><div class="grid2" style="margin-top:10px"><div><div class="small">TVL</div><b>$782,000</b></div><div><div class="small">APY</div><b class="positive">38.1%</b></div><div><div class="small">Volume 24h</div><b>$312,450</b></div><div><div class="small">Fees 24h</div><b>$980</b></div></div><button class="primary" onclick="openModal('liquidity')">Add Liquidity</button></div>
+    </section>
+    <section id="positionsPanel" style="display:none"><div class="glass cardPad"><div class="empty"><b>No liquidity positions</b>Explore pools to add your first position.</div></div></section>
+    <section id="farmPanel" style="display:none"><div class="listCard"><div class="between"><b>TON / USDT LP</b><span class="badge">x1.5</span></div><div class="grid2" style="margin-top:10px"><div><div class="small">APR</div><b>21.4%</b></div><div><div class="small">APY</div><b class="positive">24.5%</b></div><div><div class="small">Locked</div><b>30 days</b></div><div><div class="small">Your stake</div><b>0 LP</b></div></div><button class="primary" onclick="openModal('stake')">Stake LP</button></div></section>
+  </main>
 
-        function startClock() {
-            const clock = document.getElementById('live-clock');
-            setInterval(() => {
-                const now = new Date();
-                clock.innerText = now.toLocaleTimeString('ru-RU', {hour12: false});
-            }, 1000);
-        }
-        startClock();
+  <main id="launch" class="screen">
+    <div class="sectionHead"><h2>Launch</h2><span class="small">Token Studio</span></div>
+    <div class="tabs"><button class="tab active" data-launch="token" onclick="setLaunchTab('token')">Launch Token</button><button class="tab" data-launch="sniper" onclick="setLaunchTab('sniper')">Sniper</button><button class="tab" data-launch="mytokens" onclick="setLaunchTab('mytokens')">My Tokens</button><button class="tab" data-launch="presales" onclick="setLaunchTab('presales')">Presales</button></div>
+    <section id="launchTokenPanel" class="glass cardPad">
+      <div class="progress"><i id="launchProgress"></i></div><div class="small" style="margin-top:8px">Step 1 of 5 · Core information</div>
+      <div class="field"><label>Token name</label><input class="input" placeholder="Crystal Token"></div>
+      <div class="field"><label>Symbol</label><input class="input" placeholder="CRYS" maxlength="6"></div>
+      <div class="field"><label>Description</label><textarea class="textarea" placeholder="Describe your token..."></textarea></div>
+      <div class="grid2"><div class="field"><label>Total Supply</label><input class="input" placeholder="1,000,000,000"></div><div class="field"><label>Decimals</label><select class="select"><option>9</option><option>6</option><option>18</option><option>0</option></select></div></div>
+      <div class="grid2"><div class="field"><label>Soft Cap (TON)</label><input class="input" placeholder="100"></div><div class="field"><label>Hard Cap (TON)</label><input class="input" placeholder="600"></div></div>
+      <div class="sectionHead"><h2 style="font-size:13px">Taxes</h2></div><div class="grid2"><div class="field"><label>Buy Tax</label><input class="input" value="0%"></div><div class="field"><label>Sell Tax</label><input class="input" value="0%"></div></div>
+      <div class="field"><label>Anti-whale · Max wallet %</label><input class="input" value="2"></div>
+      <div class="row"><input type="checkbox" id="mintable"><label for="mintable" class="small">Mintable</label><input type="checkbox" id="freezable"><label for="freezable" class="small">Freezable</label></div>
+      <button class="primary" onclick="confirmAction('Create Token','Creation fee: 1 TON. The real deployment requires your backend + TON smart contract.')">Create Token · 1 TON</button>
+    </section>
+    <section id="sniperPanel" class="glass cardPad" style="display:none">
+      <div class="risk amber">Sniper engine requires a trusted backend/indexer and on-chain contracts. This UI does not fake execution.</div>
+      <div class="field"><label>Target Jetton / Pool address</label><input class="input" placeholder="EQ..."></div><div class="grid2"><div class="field"><label>Budget (TON)</label><input class="input" placeholder="1.00"></div><div class="field"><label>Slippage</label><input class="input" value="5%"></div></div>
+      <div class="field"><label>Method</label><select class="select"><option>Block Snipe</option><option>Mempool Snipe</option><option>Scheduled Snipe</option><option>Multi-Target Campaign</option></select></div>
+      <div class="field"><label>Auto-sell</label><select class="select"><option>TP +20% / SL −10%</option><option>Trailing Stop</option><option>Manual</option></select></div>
+      <button class="primary" onclick="confirmAction('Create Sniper Order','Order configuration saved locally. Connect backend to execute.')">Place Sniper Order</button>
+      <div class="sectionHead"><h2 style="font-size:13px">Active Snipes</h2></div><div class="empty"><b>No active sniper orders</b>Your campaigns will appear here.</div>
+    </section>
+    <section id="mytokensPanel" style="display:none"><div class="glass cardPad"><div class="empty"><b>You have no deployed tokens</b>Create your first token from Launch Token.</div></div></section>
+    <section id="presalesPanel" style="display:none"><div class="glass cardPad"><div class="empty"><b>No active presales</b>Upcoming launches will appear here.</div></div></section>
+  </main>
 
-        function fixGeometry() {
-            const doc = document.documentElement;
-            doc.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-            window.scrollTo(0,0);
-        }
+  <main id="refs" class="screen">
+    <div class="sectionHead"><h2>Refs & Quests</h2><span class="small">Social & Earn</span></div>
+    <div class="tabs"><button class="tab active" data-refs="refs" onclick="setRefsTab('refs')">Referrals</button><button class="tab" data-refs="quests" onclick="setRefsTab('quests')">Quests</button><button class="tab" data-refs="watch" onclick="setRefsTab('watch')">Watchlist</button></div>
+    <section id="refsPanel" class="glass cardPad"><div class="kicker">Your referral earnings</div><div class="balance shimmer">0.842 TON</div><div class="subrow"><span>3-level rewards</span><span class="positive">+0.05% referral pool</span></div><div class="grid2" style="margin-top:15px"><div class="listCard"><div class="small">Level 1</div><b>4 users</b><br><span class="small">60% share</span></div><div class="listCard"><div class="small">Level 2</div><b>11 users</b><br><span class="small">25% share</span></div></div><button class="primary" onclick="toast('Referral link copied')">Invite Friends</button><button class="secondary" style="width:100%;margin-top:8px" onclick="toast('Withdrawal request prepared')">Withdraw Earnings</button></section>
+    <section id="questsPanel" style="display:none"><div class="listCard"><div class="between"><b>◇ First Swap</b><span class="badge">+25 XP</span></div><div class="small" style="margin:7px 0">Complete your first swap.</div><div class="progress"><i style="width:100%"></i></div><button class="secondary" style="margin-top:9px" onclick="toast('Quest already completed')">Completed</button></div><div class="listCard"><div class="between"><b>✦ Crystal Explorer</b><span class="badge">+50 XP</span></div><div class="small" style="margin:7px 0">Analyze 3 Jetton tokens.</div><div class="progress"><i style="width:33%"></i></div><button class="primary" onclick="show('analyzer')">Continue</button></div><div class="listCard"><div class="between"><b>◈ Liquidity Seed</b><span class="badge">+100 XP</span></div><div class="small" style="margin:7px 0">Add liquidity to a verified pool.</div><div class="progress"><i style="width:0%"></i></div><button class="primary" onclick="show('earn')">Start</button></div></section>
+    <section id="watchPanel" style="display:none"><div class="glass cardPad"><div class="between"><h2 style="font-size:14px;margin:0">Watchlist</h2><button class="secondary" onclick="openModal('alert')">＋ Alert</button></div><div class="asset"><div class="tokenIcon">✦</div><div class="assetMain"><b>NOT</b><span>$0.015 · Volume $12.3K</span></div><div class="assetVal"><b class="positive">+6.2%</b><span>★</span></div></div><div class="asset"><div class="tokenIcon">◈</div><div class="assetMain"><b>DOGS</b><span>$0.00072 · Volume $8.9K</span></div><div class="assetVal"><b class="negative">−2.1%</b><span>★</span></div></div></div></section>
+  </main>
 
-        window.addEventListener('resize', fixGeometry);
-        window.addEventListener('orientationchange', fixGeometry);
-        fixGeometry();
+  <main id="analyzer" class="screen">
+    <div class="sectionHead"><h2>Token Analyzer</h2><span class="small">Jetton Security</span></div>
+    <section class="glass cardPad"><div class="field"><label>Jetton contract address</label><input id="analyzeAddress" class="input" placeholder="EQ..."></div><button class="primary" onclick="runAnalyzer()">Analyze Token</button></section>
+    <section id="analysisResult" style="display:none;margin-top:10px">
+      <div class="glass cardPad"><div class="between"><div><div class="small">Token</div><h2 style="margin:3px 0;font-size:20px">CRYSTAL</h2></div><span class="badge">Verified</span></div><div class="risk" style="margin-top:12px">🟢 Low Risk · analysis result demo</div><div class="grid2" style="margin-top:12px"><div class="listCard"><div class="small">LP burned</div><b>Yes · 100%</b></div><div class="listCard"><div class="small">Mintable</div><b>Revoked</b></div><div class="listCard"><div class="small">Buy Tax</div><b>0%</b></div><div class="listCard"><div class="small">Sell Tax</div><b>0%</b></div></div><div class="sectionHead"><h2 style="font-size:13px">Top holders</h2></div><div class="detail"><span>Creator · EQAbc...xyz</span><b>4.2%</b></div><div class="detail"><span>LP Pool · EQDef...123</span><b>18.6%</b></div><div class="detail"><span>Wallet · EQ789...456</span><b>3.1%</b></div><div class="row" style="margin-top:12px"><button class="primary" onclick="show('trade')">Trade</button><button class="secondary" onclick="show('launch');setLaunchTab('sniper')">Snipe</button><button class="secondary" onclick="toast('Added to watchlist')">★</button></div></div>
+    </section>
+    <div class="sectionHead"><h2>Recent analyses</h2></div><section class="glass cardPad"><div class="tx"><div class="txIcon">✓</div><div class="txMain"><b>CRYSTAL</b><span>Low Risk · Today</span></div><div class="txVal">Re-analyze</div></div></section>
+  </main>
 
-        document.querySelectorAll('button, .tab').forEach(btn => {
-            btn.addEventListener('touchstart', () => {
-                btn.style.opacity = '0.5';
-            });
-            btn.addEventListener('touchend', () => {
-                btn.style.opacity = '1';
-            });
-        });
+  <main id="receive" class="screen">
+    <div class="sectionHead"><h2>Receive</h2></div><section class="glass cardPad" style="text-align:center"><div class="crystal" style="width:70px;height:70px;margin:5px auto 20px"></div><div class="small">Your TON address</div><div class="listCard" style="word-break:break-all;font-size:11px">EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</div><button class="primary" onclick="navigator.clipboard?.writeText('EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');toast('Address copied')">Copy Address</button><button class="secondary" style="width:100%;margin-top:8px" onclick="toast('QR generator can be connected to the wallet backend')">Show QR</button></section>
+  </main>
+  <main id="send" class="screen"><div class="sectionHead"><h2>Send</h2></div><section class="glass cardPad"><div class="field"><label>Recipient address</label><input class="input" placeholder="EQ..."></div><div class="field"><label>Amount</label><div class="tokenField"><input class="input" placeholder="0.00"><select class="tokenSelect"><option>TON</option><option>USDT</option><option>NOT</option></select></div></div><div class="detail"><span>Network fee</span><b>~0.006 TON</b></div><button class="primary" onclick="confirmAction('Send','Review the recipient and confirm in your wallet')">Continue</button></section></main>
+</div>
 
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            document.getElementById('tg-name').innerText = `@${tg.initDataUnsafe.user.username || 'Admin'}`;
-        }
-    </script>
+<nav class="nav">
+  <button data-nav="home" class="active" onclick="show('home')"><span>⌂</span>Home</button>
+  <button data-nav="trade" onclick="show('trade')"><span>⇄</span>Trade</button>
+  <button data-nav="earn" onclick="show('earn')"><span>◈</span>Earn</button>
+  <button data-nav="launch" onclick="show('launch')"><span>✦</span>Launch</button>
+  <button data-nav="refs" onclick="show('refs')"><span>◇</span>Refs</button>
+</nav>
+
+<div class="toast" id="toast"></div>
+<div class="modalWrap" id="modalWrap" onclick="if(event.target===this)closeModal()"><div class="modal" id="modal"></div></div>
+
+<script>
+const tg=window.Telegram?.WebApp;
+if(tg){tg.ready();tg.expand(); if(tg.setHeaderColor)tg.setHeaderColor('#080611'); if(tg.setBackgroundColor)tg.setBackgroundColor('#080611');}
+const screens=['home','portfolio','trade','earn','launch','refs','analyzer','receive','send'];
+function show(id){
+  screens.forEach(x=>document.getElementById(x)?.classList.toggle('active',x===id));
+  document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('active',b.dataset.nav===id || (['portfolio','receive','send','analyzer'].includes(id)&&b.dataset.nav==='home')));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._toast);window._toast=setTimeout(()=>t.classList.remove('show'),2400)}
+function openModal(type){
+ const m=document.getElementById('modal');let html='';
+ if(type==='notifications') html='<h3>Notifications</h3><p>No new notifications. Price alerts, order updates and wallet activity will appear here.</p><button class="primary" onclick="closeModal()">Done</button>';
+ if(type==='more') html='<h3>More</h3><p>History, Settings and key-management options belong here. Never enter a seed phrase into a page unless the wallet implementation has been audited.</p><div class="grid2"><button class="secondary" onclick="show(\'portfolio\');closeModal()">History</button><button class="secondary" onclick="closeModal();toast(\'Settings opened\')">Settings</button></div>';
+ if(type==='liquidity') html='<h3>Add Liquidity · TON / USDT</h3><p>Deposit both assets according to the current pool ratio.</p><div class="field"><label>TON</label><input class="input" placeholder="0.00"></div><div class="field"><label>USDT</label><input class="input" placeholder="0.00"></div><div class="detail"><span>Your Share</span><b>0.0012%</b></div><div class="detail"><span>Estimated LP</span><b>12.345</b></div><button class="primary" onclick="closeModal();toast(\'Liquidity action prepared\')">Confirm</button>';
+ if(type==='stake') html='<h3>Stake LP</h3><p>Choose amount and lock period. Longer periods receive the Emerald Hands multiplier.</p><div class="field"><label>LP amount</label><input class="input" placeholder="0.00"></div><select class="select"><option>Flexible · x1.0</option><option>7 days · x1.2</option><option>30 days · x1.5</option><option>90 days · x2.0</option><option>180 days · x3.0</option></select><button class="primary" onclick="closeModal();toast(\'Stake action prepared\')">Stake LP</button>';
+ if(type==='alert') html='<h3>Price Alert</h3><p>Configure a custom alert for a watchlisted token.</p><div class="field"><label>Trigger</label><select class="select"><option>Price above</option><option>Price below</option><option>24h change above</option><option>Volume spike</option><option>Liquidity change</option></select></div><input class="input" placeholder="Value"><button class="primary" onclick="closeModal();toast(\'Alert saved\')">Save Alert</button>';
+ document.getElementById('modalWrap').classList.add('open');m.innerHTML=html;
+}
+function closeModal(){document.getElementById('modalWrap').classList.remove('open')}
+function confirmAction(title,desc){openModal('notifications');document.getElementById('modal').innerHTML='<h3>'+title+'</h3><p>'+desc+'</p><div class="risk amber">Demo UI: no real transaction is broadcast from this standalone HTML.</div><button class="primary" onclick="closeModal();toast(\'Action queued for backend\')">Continue</button>'}
+function calcSwap(){const n=parseFloat(document.getElementById('payAmount').value)||0;const out=n*102.92*.996;document.getElementById('receiveAmount').value=out.toFixed(4);document.getElementById('minReceive').textContent=(out*.99).toFixed(4)}
+function flipTokens(){const a=document.getElementById('payToken'),b=document.getElementById('receiveToken');[a.value,b.value]=[b.value,a.value];calcSwap();toast('Tokens switched')}
+function setTradeTab(t){document.querySelectorAll('[data-trade]').forEach(x=>x.classList.toggle('active',x.dataset.trade===t));document.getElementById('swapPanel').style.display=t==='swap'?'block':'none';document.getElementById('limitPanel').style.display=t==='limit'?'block':'none'}
+function setEarnTab(t){document.querySelectorAll('[data-earn]').forEach(x=>x.classList.toggle('active',x.dataset.earn===t));document.getElementById('poolsPanel').style.display=t==='pools'?'block':'none';document.getElementById('positionsPanel').style.display=t==='positions'?'block':'none';document.getElementById('farmPanel').style.display=t==='farm'?'block':'none'}
+function setLaunchTab(t){document.querySelectorAll('[data-launch]').forEach(x=>x.classList.toggle('active',x.dataset.launch===t));['token','sniper','mytokens','presales'].forEach(x=>document.getElementById(x==='token'?'launchTokenPanel':x+'Panel').style.display=x===t?'block':'none')}
+function setRefsTab(t){document.querySelectorAll('[data-refs]').forEach(x=>x.classList.toggle('active',x.dataset.refs===t));document.getElementById('refsPanel').style.display=t==='refs'?'block':'none';document.getElementById('questsPanel').style.display=t==='quests'?'block':'none';document.getElementById('watchPanel').style.display=t==='watch'?'block':'none'}
+function runAnalyzer(){document.getElementById('analysisResult').style.display='block';toast('Analysis UI ready — connect indexer for live data')}
+</script>
 </body>
 </html>
